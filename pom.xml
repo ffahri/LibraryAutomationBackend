@@ -50,8 +50,14 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>5.0.5.RELEASE</version>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/oracle/ojdbc -->
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>ojdbc</artifactId>
+            <version>1.4</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
