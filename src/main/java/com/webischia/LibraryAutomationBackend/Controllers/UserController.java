@@ -6,6 +6,7 @@ import com.webischia.LibraryAutomationBackend.api.v1.model.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,4 +30,15 @@ public class UserController {
 
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
     }
+
+    //@PreAuthorize("hasAuthority('Client')
+    @PutMapping("/change/${id}")
+    public ResponseEntity<String> changePassword(@PathVariable String id)
+    {
+        // userService.changePassword(id);
+
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
+
+
 }
