@@ -3,12 +3,19 @@ package com.webischia.LibraryAutomationBackend.Service;
 import com.webischia.LibraryAutomationBackend.Domains.ItemType;
 import com.webischia.LibraryAutomationBackend.Domains.Items;
 import com.webischia.LibraryAutomationBackend.Domains.Subject;
+import com.webischia.LibraryAutomationBackend.Repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService{
+
+    ItemRepository itemRepository;
+
+    public ItemServiceImpl(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     @Override
     public ItemType addItemType(String name) {
@@ -84,4 +91,6 @@ public class ItemServiceImpl implements ItemService{
     public List<Subject> getAllSubjects() {
         return null;
     }
+
+
 }

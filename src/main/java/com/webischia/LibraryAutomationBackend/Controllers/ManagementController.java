@@ -20,9 +20,9 @@ import java.util.List;
 public class ManagementController {
     //item ekle item tipi ekle yazar ekle yayınevi ekle
 
-    ItemService itemService;
-    PublishlerService publishlerService;
-    AuthorService authorService;
+    private final ItemService itemService;
+    private final PublishlerService publishlerService;
+    private final AuthorService authorService;
 
     public ManagementController(ItemService itemService, PublishlerService publishlerService, AuthorService authorService) {
         this.itemService = itemService;

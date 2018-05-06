@@ -48,17 +48,27 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>5.0.5.RELEASE</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/oracle/ojdbc -->
-        <dependency>
-            <groupId>oracle</groupId>
-            <artifactId>ojdbc</artifactId>
-            <version>1.4</version>
-        </dependency>
-        <dependency>
+		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
+		<!-- https://mvnrepository.com/artifact/com.oracle.jdbc/com.springsource.oracle.jdbc -->
+		<!-- https://mvnrepository.com/artifact/oracle/ojdbc6 -->
+		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6 -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+		<dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-jdk8</artifactId>
             <version>${org.mapstruct.version}</version>
@@ -139,6 +149,10 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+		<id>codelds</id>
+		<url>https://code.lds.org/nexus/content/groups/main-repo</url>
 		</repository>
 	</repositories>
 </project>
