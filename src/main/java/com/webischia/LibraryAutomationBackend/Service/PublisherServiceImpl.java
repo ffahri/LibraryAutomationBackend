@@ -1,9 +1,10 @@
 package com.webischia.LibraryAutomationBackend.Service;
 
 import com.webischia.LibraryAutomationBackend.Domains.Publisher;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class PublisherServiceImpl implements PublishlerService {
 
     @Override

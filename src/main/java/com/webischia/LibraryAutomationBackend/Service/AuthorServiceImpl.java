@@ -1,9 +1,11 @@
 package com.webischia.LibraryAutomationBackend.Service;
 
 import com.webischia.LibraryAutomationBackend.Domains.Author;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AuthorServiceImpl implements AuthorService {
 
     @Override

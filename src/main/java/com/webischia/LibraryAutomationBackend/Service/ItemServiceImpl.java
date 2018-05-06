@@ -3,9 +3,11 @@ package com.webischia.LibraryAutomationBackend.Service;
 import com.webischia.LibraryAutomationBackend.Domains.ItemType;
 import com.webischia.LibraryAutomationBackend.Domains.Items;
 import com.webischia.LibraryAutomationBackend.Domains.Subject;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ItemServiceImpl implements ItemService{
 
     @Override
