@@ -17,23 +17,23 @@ public class SubjectRepository {
     public Subject addSubject(Subject subject) {
 
         jdbcTemplate.execute("INSERT INTO SUBJECT(subjectName) VALUES("+subject.getSubjectName()+")");
-        return jdbcTemplate.queryForObject("select subjectID,subjectName from SUBJECT where subjectName ="+subject.getSubjectName(),
+        return jdbcTemplate.queryForObject("select subjectID,subjectName from SUBJECT where subjectName ='"+subject.getSubjectName()+"'",
                 (rs,rowNum) ->new Subject(rs.getInt("subjectID"),rs.getString("subjectName")));
     }
 
 
     public Subject updateSubject(Subject subject, int id) {
-        jdbcTemplate.execute("UPDATE SUBJECT SET subjectName="+subject.getSubjectName()+"WHERE subjectID="+id);
+        jdbcTemplate.execute("UPDATE SUBJECT SET subjectName='"+subject.getSubjectName()+"' WHERE subjectID= "+id);
         return getSubject(id);
     }
 
 
     public void deleteSubject(int id) {
-        jdbcTemplate.execute("DELETE FROM SUBJECT WHERE subjectID="+id);
+        jdbcTemplate.execute("DELETE FROM SUBJECT WHERE subjectID= "+id);
     }
 
     public Subject getSubject(int id) {
-        return jdbcTemplate.queryForObject("select subjectID,subjectName from SUBJECT where subjectID ="+id,
+        return jdbcTemplate.queryForObject("select subjectID,subjectName from SUBJECT where subjectID= "+id,
                 (rs,rowNum) ->new Subject(rs.getInt("subjectID"),rs.getString("subjectName")));
     }
 

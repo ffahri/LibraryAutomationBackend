@@ -14,6 +14,9 @@ public class User {
     String userPassword; //yes thats not ideal but...
         //dont want password d'oh ?
 
+    public User() {
+    }
+
     public User(int userID, int accessID, String firstName, String lastName, String mail, String phone, String userPassword) {
         this.userID = userID;
         this.accessID = accessID;

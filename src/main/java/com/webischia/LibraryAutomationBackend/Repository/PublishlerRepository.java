@@ -16,7 +16,7 @@ public class PublishlerRepository {
 
     public Publisher addPublisher(Publisher publisher) {
         jdbcTemplate.execute("INSERT INTO PUBLISHER(publisherName) VALUES("+publisher.getPublisherName()+")");
-        return jdbcTemplate.queryForObject("select publisherID,publisherName from PUBLISHER where publisherName ="+publisher.getPublisherName()
+        return jdbcTemplate.queryForObject("select publisherID,publisherName from PUBLISHER where publisherName ='"+publisher.getPublisherName()+"'"
                 ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));
     }
 
