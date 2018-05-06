@@ -11,8 +11,8 @@ public class Items {
     String itemName;
     int typeID;
     String itemDesc;
-    int ISBN;
-    int stockNo;
+    String ISBN;
+    String stockNo;
     String pageNumber;
     String sizeValue;
     String editionNo;
@@ -20,7 +20,7 @@ public class Items {
     Date editDate;
     String itemLang;
 
-    public Items(int itemID, String itemName, int typeID, String itemDesc, int ISBN, int stockNo, String pageNumber, String sizeValue, String editionNo, String printYear, Date editDate, String itemLang) {
+    public Items(int itemID, String itemName, int typeID, String itemDesc, String ISBN, String stockNo, String pageNumber, String sizeValue, String editionNo, String printYear, Date editDate, String itemLang) {
         this.itemID = itemID;
         this.itemName = itemName;
         this.typeID = typeID;
