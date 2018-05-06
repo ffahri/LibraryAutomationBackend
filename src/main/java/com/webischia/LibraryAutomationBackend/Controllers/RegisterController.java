@@ -1,29 +1,31 @@
 package com.webischia.LibraryAutomationBackend.Controllers;
 
 
+import com.webischia.LibraryAutomationBackend.Service.ItemService;
 import com.webischia.LibraryAutomationBackend.Service.UserService;
 import com.webischia.LibraryAutomationBackend.api.v1.model.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping({"/api/v1/user/","/api/v1/users"})
-public class UserController {
+@RequestMapping({"/api/v1/register/","/api/v1/register"})
+public class RegisterController {
 
     //change password - register - ??
     UserService userService;
+    ItemService itemService;
 
-    public UserController(UserService userService) {
+    public RegisterController(UserService userService, ItemService itemService) {
         this.userService = userService;
+        this.itemService = itemService;
     }
 
+
+
     //REGISTER
-    @PutMapping("/register")
+    @PutMapping("/new")
     public ResponseEntity<UserDTO> register(@RequestBody UserDTO userDTO)
     {
        // userService.register(userDTO);
@@ -31,14 +33,6 @@ public class UserController {
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
     }
 
-    //@PreAuthorize("hasAuthority('Client')
-    @PutMapping("/change/${id}")
-    public ResponseEntity<String> changePassword(@PathVariable String id)
-    {
-        // userService.changePassword(id);
-
-        return new ResponseEntity<String>(HttpStatus.OK);
-    }
 
 
 }
