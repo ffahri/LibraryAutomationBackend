@@ -1,9 +1,6 @@
 package com.webischia.LibraryAutomationBackend.Controllers;
 
-import com.webischia.LibraryAutomationBackend.Domains.Author;
-import com.webischia.LibraryAutomationBackend.Domains.ItemType;
-import com.webischia.LibraryAutomationBackend.Domains.Items;
-import com.webischia.LibraryAutomationBackend.Domains.Publisher;
+import com.webischia.LibraryAutomationBackend.Domains.*;
 import com.webischia.LibraryAutomationBackend.Service.AuthorService;
 import com.webischia.LibraryAutomationBackend.Service.ItemService;
 import com.webischia.LibraryAutomationBackend.Service.PublishlerService;
@@ -185,5 +182,43 @@ public class ManagementController {
         return new ResponseEntity<List<Publisher>>(publishlerService.getAllPublishers(),HttpStatus.OK);
     }
 
+    /////////////
+    @PreAuthorize("hasAuthority('Admin')")
+
+    @PostMapping("/subject/add")
+    public ResponseEntity<Subject>addSubject(@RequestBody Subject subject)
+    {
+        return new ResponseEntity<>(itemService.addSubject(subject),HttpStatus.OK);
+
+    }
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/subject/delete/{id}")
+    public ResponseEntity<String>deleteSubject(@PathVariable int id)
+    {
+        itemService.deleteSubject(id);
+        return new ResponseEntity<String>(HttpStatus.OK);
+
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/subject/get/{id}")
+    public ResponseEntity<Subject>getSubject(@PathVariable int id)
+    {
+        return new ResponseEntity<Subject>(itemService.getSubject(id),HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @PostMapping("/subject/edit/{id}")
+    public ResponseEntity<Subject>editSubject(@RequestBody Subject subject , int id)
+    {
+        return new ResponseEntity<>(itemService.updateSubject(subject,id),HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('Admin')")
+
+    @GetMapping("/subject/get/all")
+    public ResponseEntity<List<Subject>>getAllSubjects()
+    {
+        return new ResponseEntity<List<Subject>>(itemService.getAllSubjects(),HttpStatus.OK);
+    }
 
 }
