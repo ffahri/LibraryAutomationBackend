@@ -9,8 +9,8 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService{
 
     @Override
-    public void addItemType(String name) {
-
+    public ItemType addItemType(String name) {
+        return null;
     }
 
     @Override
@@ -29,18 +29,18 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public void updateItemType(ItemType dto, int id) {
-
+    public ItemType updateItemType(ItemType dto, int id) {
+        return null;
     }
 
     @Override
-    public void addItem(Items item) {
-
+    public Items addItem(Items item) {
+        return null;
     }
 
     @Override
-    public void updateItem(Items item, int id) {
-
+    public Items updateItem(Items item, int id) {
+        return null;
     }
 
     @Override
@@ -59,13 +59,13 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public void addSubject(Subject subject) {
-
+    public Subject addSubject(Subject subject) {
+        return null;
     }
 
     @Override
-    public void updateSubject(Subject subject, int id) {
-
+    public Subject updateSubject(Subject subject, int id) {
+        return null;
     }
 
     @Override

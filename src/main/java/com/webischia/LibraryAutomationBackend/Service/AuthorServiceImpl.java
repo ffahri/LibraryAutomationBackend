@@ -7,13 +7,13 @@ import java.util.List;
 public class AuthorServiceImpl implements AuthorService {
 
     @Override
-    public void addAuthor(Author author) {
-
+    public Author addAuthor(Author author) {
+        return null;
     }
 
     @Override
-    public void updateAuthor(Author author, int id) {
-
+    public Author updateAuthor(Author author, int id) {
+        return null;
     }
 
     @Override

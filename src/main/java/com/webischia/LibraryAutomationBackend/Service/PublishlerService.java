@@ -9,8 +9,8 @@ import java.util.List;
 public interface PublishlerService {
 
 
-    void addPublisher(Publisher publisher);
-    void updatePublisher(Publisher publisher,int id);
+    Publisher addPublisher(Publisher publisher);
+    Publisher updatePublisher(Publisher publisher,int id);
     void deletePublisher(int id);
     List<Publisher> getAllPublishers();
     Publisher getPublisher(int id);

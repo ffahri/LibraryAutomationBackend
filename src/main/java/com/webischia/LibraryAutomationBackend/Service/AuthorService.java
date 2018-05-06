@@ -9,8 +9,8 @@ import java.util.List;
 public interface AuthorService  {
 
 
-    void addAuthor(Author author);
-    void updateAuthor(Author author,int id);
+    Author addAuthor(Author author);
+    Author updateAuthor(Author author,int id);
     void deleteAuthor(int id);
     Author getAuthor(int id);
     List<Author> getAllAuthors();

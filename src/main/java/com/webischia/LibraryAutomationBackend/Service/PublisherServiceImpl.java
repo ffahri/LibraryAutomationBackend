@@ -7,13 +7,13 @@ import java.util.List;
 public class PublisherServiceImpl implements PublishlerService {
 
     @Override
-    public void addPublisher(Publisher publisher) {
-
+    public Publisher addPublisher(Publisher publisher) {
+        return null;
     }
 
     @Override
-    public void updatePublisher(Publisher publisher, int id) {
-
+    public Publisher updatePublisher(Publisher publisher, int id) {
+        return null;
     }
 
     @Override
