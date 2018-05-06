@@ -13,12 +13,14 @@ public class User {
     String phone;
     String userPassword; //yes thats not ideal but...
         //dont want password d'oh ?
-    public User(int userID, int accessID, String firstName, String lastName, String mail, String phone) {
+
+    public User(int userID, int accessID, String firstName, String lastName, String mail, String phone, String userPassword) {
         this.userID = userID;
         this.accessID = accessID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mail = mail;
         this.phone = phone;
+        this.userPassword = userPassword;
     }
 }
