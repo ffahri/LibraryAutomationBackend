@@ -6,4 +6,9 @@ import lombok.Data;
 public class Publisher {
     int publisherID;
     String publisherName;
+
+    public Publisher(int publisherID, String publisherName) {
+        this.publisherID = publisherID;
+        this.publisherName = publisherName;
+    }
 }

@@ -20,4 +20,18 @@ public class Items {
     Date editDate;
     String itemLang;
 
+    public Items(int itemID, String itemName, int typeID, String itemDesc, int ISBN, int stockNo, String pageNumber, String sizeValue, String editionNo, String printYear, Date editDate, String itemLang) {
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.typeID = typeID;
+        this.itemDesc = itemDesc;
+        this.ISBN = ISBN;
+        this.stockNo = stockNo;
+        this.pageNumber = pageNumber;
+        this.sizeValue = sizeValue;
+        this.editionNo = editionNo;
+        this.printYear = printYear;
+        this.editDate = editDate;
+        this.itemLang = itemLang;
+    }
 }

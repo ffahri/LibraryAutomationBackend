@@ -6,4 +6,9 @@ import lombok.Data;
 public class Country {
     int countryID;
     String countryName;
+
+    public Country(int countryID, String countryName) {
+        this.countryID = countryID;
+        this.countryName = countryName;
+    }
 }
