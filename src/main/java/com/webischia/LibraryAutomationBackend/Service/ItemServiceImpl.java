@@ -49,7 +49,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<ItemType> getAllItems() {
+    public List<Items> getAllItems() {
         return null;
     }
 

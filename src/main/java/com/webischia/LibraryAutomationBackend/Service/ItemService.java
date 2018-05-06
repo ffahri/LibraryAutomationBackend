@@ -17,7 +17,7 @@ public interface ItemService{
         void addItem(Items item);
         void updateItem(Items item,int id);
         void deleteItem(int id);
-        List<ItemType> getAllItems();
+        List<Items> getAllItems();
         Items getItem(int id);
 
 
