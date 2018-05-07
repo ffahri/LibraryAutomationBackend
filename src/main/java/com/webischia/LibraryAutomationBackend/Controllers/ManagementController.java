@@ -221,4 +221,19 @@ public class ManagementController {
         return new ResponseEntity<List<Subject>>(itemService.getAllSubjects(),HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/item/{itemid}/author/{authorid}")
+    public ResponseEntity<Void>addAuthorToItem(@PathVariable int itemid , @PathVariable int authorid)
+    {
+        itemService.addAuthorToItem(authorid,itemid);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/item/{itemid}/subject/{subjectid}")
+    public ResponseEntity<Void>addSubjectToItem(@PathVariable int itemid , @PathVariable int subjectid)
+    {
+        itemService.addSubjectToItem(subjectid,itemid);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
