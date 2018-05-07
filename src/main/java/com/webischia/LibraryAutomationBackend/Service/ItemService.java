@@ -19,7 +19,11 @@ public interface ItemService{
         void deleteItem(int id);
         List<Items> getAllItems();
         Items getItem(int id);
-
+        Items findItemByISBN(String ISBN);
+        List<Items> searchItemByKeyword(String keyword);
+        List<Items> searchItemsByPublisher(String publisher);
+        List<Items> searchItemsByAuthor(String author);
+        List<Items> searchItesmBySubject(String subject);
 
         Subject addSubject(Subject subject);
         Subject updateSubject(Subject subject , int id);
@@ -29,5 +33,8 @@ public interface ItemService{
 
         void addAuthorToItem(int authorID , int itemID );
         void addSubjectToItem(int subjectID,int itemID) ;
-
+        void addPublisherToItem(int publisherID,int itemID);
+        void editAuthorToItem(int authorID,int itemID);
+        void editSubjectToItem(int subjectid,int itemID);
+        void editPublisherToItem(int publisherId,int itemID);
 }

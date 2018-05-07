@@ -105,4 +105,50 @@ public class ItemServiceImpl implements ItemService{
     public void addSubjectToItem(int subjectID, int itemID) {
         itemRepository.addSubjectToItem(subjectID,itemID);
     }
+
+    @Override
+    public void addPublisherToItem(int publisherID, int itemID) {
+        itemRepository.addPublisherToItem(publisherID,itemID);
+
+    }
+
+    @Override
+    public void editAuthorToItem(int authorID, int itemID) {
+        itemRepository.editAuthorToItem(authorID,itemID);
+    }
+
+    @Override
+    public void editSubjectToItem(int subjectid, int itemID) {
+        itemRepository.editSubjectToItem(subjectid,itemID);
+    }
+
+    @Override
+    public void editPublisherToItem(int publisherId, int itemID) {
+        itemRepository.editPublisherToItem(publisherId,itemID);
+    }
+
+    @Override
+    public Items findItemByISBN(String ISBN) {
+        return itemRepository.findItemByISBN(ISBN);
+    }
+
+    @Override
+    public List<Items> searchItemByKeyword(String keyword) {
+        return itemRepository.searchItemByKeyword(keyword);
+    }
+
+    @Override
+    public List<Items> searchItemsByPublisher(String publisher) {
+        return itemRepository.searchItemsByPublisher(publisher);
+    }
+
+    @Override
+    public List<Items> searchItemsByAuthor(String author) {
+        return itemRepository.searchItemsByAuthor(author);
+    }
+
+    @Override
+    public List<Items> searchItesmBySubject(String subject) {
+        return searchItesmBySubject(subject);
+    }
 }
