@@ -27,12 +27,14 @@ public class UserRepository {
     public User findByMail(String mail){
 
         String sqlQ ="select userID,accessID,firstName,lastName,mail,phone,userPassword from FAHRI2.USERS where mail='"+mail+"'";
-        String sqlQ1 ="select userID,accessID,firstName,lastName,mail,phone,userPassword from FAHRI2.USERS where mail =";
 
-        System.out.println(sqlQ);
-        //jdbcTemplate.query(sqlQ,);
         return jdbcTemplate.queryForObject(sqlQ,new UserMapper());
 
 
+    }
+
+    public User findByID(int id)
+    {
+        return jdbcTemplate.queryForObject("select * from FAHRI2.USERS where userID= "+id,new UserMapper());
     }
 }
