@@ -236,4 +236,37 @@ public class ManagementController {
         itemService.addSubjectToItem(subjectid,itemid);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/item/{itemid}/publisher/{publisherid}")
+    public ResponseEntity<Void>addPublisherToItem(@PathVariable int itemid , @PathVariable int publisherid)
+    {
+        itemService.addPublisherToItem(publisherid,itemid);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    ///
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/item/{itemid}/author/{authorid}/edit")
+    public ResponseEntity<Void>editAuthorToItem(@PathVariable int itemid , @PathVariable int authorid)
+    {
+        itemService.editAuthorToItem(authorid,itemid);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/item/{itemid}/subject/{subjectid}/edit")
+    public ResponseEntity<Void>editSubjectToItem(@PathVariable int itemid , @PathVariable int subjectid)
+    {
+        itemService.editSubjectToItem(subjectid,itemid);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/item/{itemid}/publisher/{publisherid}/edit")
+    public ResponseEntity<Void>editPublisherToItem(@PathVariable int itemid , @PathVariable int publisherid)
+    {
+        itemService.editPublisherToItem(publisherid,itemid);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
