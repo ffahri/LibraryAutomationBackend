@@ -15,25 +15,29 @@ public class PublishlerRepository {
     private JdbcTemplate jdbcTemplate;
 
     public Publisher addPublisher(Publisher publisher) {
-        jdbcTemplate.execute("INSERT INTO PUBLISHER(publisherName) VALUES("+publisher.getPublisherName()+")");
-        return jdbcTemplate.queryForObject("select publisherID,publisherName from PUBLISHER where publisherName ='"+publisher.getPublisherName()+"'"
+        jdbcTemplate.execute("INSERT INTO FAHRI2.PUBLISHER(publisherName) VALUES("+publisher.getPublisherName()+")");
+        return jdbcTemplate.queryForObject("select publisherID,publisherName from FAHRI2.PUBLISHER where publisherName ='"+publisher.getPublisherName()+"'"
                 ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));
     }
 
 
     public Publisher updatePublisher(Publisher publisher, int id) {
-        return null;
+        jdbcTemplate.execute("UPDATE FAHRI2.PUBLISHER SET publisherName='"+publisher.getPublisherName()+"' WHERE publisherID= "+id);
+        return getPublisher(id);
     }
 
     public void deletePublisher(int id) {
-
+        jdbcTemplate.execute("DELETE FROM FAHRI2.PUBLISHER WHERE publisherID= "+id);
     }
 
     public List<Publisher> getAllPublishers() {
-        return null;
+        List<Publisher> tmp = jdbcTemplate.query("select publisherID,publisherName from FAHRI2.PUBLISHER"
+                ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));
+        return tmp;
     }
 
     public Publisher getPublisher(int id) {
-        return null;
-    }
+
+        return jdbcTemplate.queryForObject("select publisherID,publisherName from FAHRI2.PUBLISHER where publisherID= "+id
+                ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));    }
 }

@@ -96,13 +96,64 @@ public class ItemRepository {
 
     public void addAuthorToItem(int authorID , int itemID )
     {
-        jdbcTemplate.execute("INSERT INTO AUTHOR_ITEMS(authorID,itemID) VALUES('"+authorID+"','"+itemID+"')");
+        jdbcTemplate.execute("INSERT INTO FAHRI2.AUTHOR_ITEMS(authorID,itemID) VALUES("+authorID+","+itemID+")");
     }
 
     public void addSubjectToItem(int subjectID,int itemID)
     {
-        jdbcTemplate.execute("INSERT INTO SUBJECT_ITEMS(subjectID,itemID) VALUES('"+subjectID+"','"+itemID+"')");
+        jdbcTemplate.execute("INSERT INTO FAHRI2.SUBJECT_ITEMS(subjectID,itemID) VALUES("+subjectID+","+itemID+")");
 
+    }
+
+    public void addPublisherToItem(int publisherID, int itemID) {
+        jdbcTemplate.execute("INSERT INTO FAHRI2.PUBLISHER_ITEM(publisherID,itemID) VALUES("+publisherID+","+itemID+")");
+
+    }
+
+    public void editAuthorToItem(int authorID, int itemID) {
+        jdbcTemplate.execute("UPDATE FAHRI2.AUTHOR_ITEMS SET authorID= "+authorID+",itemID= "+itemID);
+    }
+
+    public void editSubjectToItem(int subjectid, int itemID) {
+        jdbcTemplate.execute("UPDATE FAHRI2.SUBJECT_ITEMS SET subjectID= "+subjectid+",itemID= "+itemID);
+
+    }
+
+    public void editPublisherToItem(int publisherId, int itemID) {
+        jdbcTemplate.execute("UPDATE FAHRI2.PUBLISHER_ITEM SET publisherID= "+publisherId+",itemID= "+itemID);
+
+    }
+
+    public Items findItemByISBN(String ISBN) {
+        return jdbcTemplate.queryForObject("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate from FAHRI2.ITEMS where ISBN='"+ISBN+"'",
+                (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
+                        rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+    }
+
+    public List<Items> searchItemByKeyword(String keyword) {
+        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate from FAHRI2.ITEMS where itemName='%"+keyword+"%'",
+                (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
+                        rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+        return result;
+    }
+
+    public List<Items> searchItemsByPublisher(String publisher) {
+        //join????
+        List<Items> result = jdbcTemplate.query("select * from FAHRI2.ITEMS join FAHRI2.PUBLISHER where itemName='%"+publisher+"%'",
+                (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
+                        rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+        return result;
+    }
+
+    public List<Items> searchItemsByAuthor(String author) {
+        return null;
+    }
+
+    public List<Items> searchItesmBySubject(String subject) {
+        return null;
     }
 
 }
