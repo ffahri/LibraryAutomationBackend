@@ -27,4 +27,7 @@ public interface ItemService{
         Subject getSubject(int id);
         List<Subject> getAllSubjects();
 
+        void addAuthorToItem(int authorID , int itemID );
+        void addSubjectToItem(int subjectID,int itemID) ;
+
 }

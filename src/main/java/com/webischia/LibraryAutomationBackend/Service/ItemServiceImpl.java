@@ -96,5 +96,13 @@ public class ItemServiceImpl implements ItemService{
         return subjectRepository.getAllSubjects();
     }
 
+    @Override
+    public void addAuthorToItem(int authorID, int itemID) {
+        itemRepository.addAuthorToItem(authorID,itemID);
+    }
 
+    @Override
+    public void addSubjectToItem(int subjectID, int itemID) {
+        itemRepository.addSubjectToItem(subjectID,itemID);
+    }
 }
