@@ -1,8 +1,10 @@
 package com.webischia.LibraryAutomationBackend.Domains;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Publisher {
     int publisherID;
     String publisherName;

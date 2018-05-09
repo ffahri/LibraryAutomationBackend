@@ -16,7 +16,7 @@ public class SubjectRepository {
 
     public Subject addSubject(Subject subject) {
 
-        jdbcTemplate.execute("INSERT INTO FAHRI2.SUBJECT(subjectName) VALUES("+subject.getSubjectName()+")");
+        jdbcTemplate.execute("INSERT INTO FAHRI2.SUBJECT(subjectName) VALUES('"+subject.getSubjectName()+"')");
         return jdbcTemplate.queryForObject("select subjectID,subjectName from FAHRI2.SUBJECT where subjectName ='"+subject.getSubjectName()+"'",
                 (rs,rowNum) ->new Subject(rs.getInt("subjectID"),rs.getString("subjectName")));
     }

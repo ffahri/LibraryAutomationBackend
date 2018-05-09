@@ -11,4 +11,11 @@ public class Subject {
         this.subjectID = subjectID;
         this.subjectName = subjectName;
     }
+
+    public Subject(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public Subject() {
+    }
 }
