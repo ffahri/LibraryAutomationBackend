@@ -36,7 +36,7 @@ public class ManagementController {
         return new ResponseEntity<>(itemService.addItemType(itemType.getTypeName()),HttpStatus.OK);
     }
     @PreAuthorize("hasAuthority('Admin')")
-    @PostMapping("/itemtype/edit/{id}")
+        @PostMapping("/itemtype/edit/{id}")
     public ResponseEntity<ItemType>editItemType(@RequestBody ItemType itemType , @PathVariable int id)
     {
 
@@ -209,7 +209,7 @@ public class ManagementController {
 
     @PreAuthorize("hasAuthority('Admin')")
     @PostMapping("/subject/edit/{id}")
-    public ResponseEntity<Subject>editSubject(@RequestBody Subject subject , int id)
+    public ResponseEntity<Subject>editSubject(@RequestBody Subject subject ,@PathVariable int id)
     {
         return new ResponseEntity<>(itemService.updateSubject(subject,id),HttpStatus.OK);
     }
