@@ -47,9 +47,9 @@ public class ItemRepository {
     }
 
     public Items addItem(Items item,int typeID){
-        jdbcTemplate.execute("INSERT INTO FAHRI2.ITEMS(itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang)"+
+        jdbcTemplate.execute("INSERT INTO FAHRI2.ITEMS(itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,publisherID)"+
         "VALUES('"+item.getItemName()+"',"+typeID+",'"+item.getItemDesc()+"','"+item.getISBN()+"','"+item.getStockNo()+"','"+item.getSizeValue()+
-                "','"+item.getPageNumber()+"','"+item.getPrintYear()+"','"+item.getEditionNo()+"','"+item.getItemLang()+"')");
+                "','"+item.getPageNumber()+"','"+item.getPrintYear()+"','"+item.getEditionNo()+"','"+item.getItemLang()+"',"+item.getPublisherID()+")");
 
         return getItem(jdbcTemplate
                 .queryForObject("SELECT itemID FROM FAHRI2.ITEMS WHERE stockNo='"+item.getStockNo()+"'",Integer.class));
@@ -58,7 +58,7 @@ public class ItemRepository {
     {
         jdbcTemplate.execute("UPDATE FAHRI2.ITEMS SET itemName='"+item.getItemName()+"',"+"typeID="+item.getTypeID()+",'"+"itemDesc="+item.getItemDesc()+"','"+
         "ISBN="+item.getISBN()+"','"+"stockNo="+item.getISBN()+"','"+"sizeValue="+item.getSizeValue()+"','"+"pageNumber="+item.getPageNumber()+"','"+
-        "printYear="+item.getPrintYear()+"','"+"editionNo="+item.getEditionNo()+"','"+"itemLang="+item.getItemLang()+"'");
+        "printYear="+item.getPrintYear()+"','"+"editionNo="+item.getEditionNo()+"','"+"itemLang="+item.getItemLang()+"',publisherID="+item.getPublisherID());
         return getItem(jdbcTemplate
                 .queryForObject("SELECT itemID FROM FAHRI2.ITEMS WHERE itemID= "+id,Integer.class));
     }
@@ -68,10 +68,10 @@ public class ItemRepository {
         jdbcTemplate.execute("DELETE FROM FAHRI2.ITEMS WHERE itemID= "+id);
     }
     public List<Items> getAllItems(){
-        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate from FAHRI2.ITEMS",
+        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS",
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
-                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
         return result;
     }
 //    itemID int not null,
@@ -87,10 +87,10 @@ public class ItemRepository {
 //    itemLang char(2) not null, ---ISO 639-1
 //    editDate timestamp not null,
     public Items getItem(int id){
-        return jdbcTemplate.queryForObject("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate from FAHRI2.ITEMS where itemID= "+id,
+        return jdbcTemplate.queryForObject("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS where itemID= "+id,
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
-                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
 
     }
 
@@ -125,17 +125,17 @@ public class ItemRepository {
     }
 
     public Items findItemByISBN(String ISBN) {
-        return jdbcTemplate.queryForObject("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate from FAHRI2.ITEMS where ISBN='"+ISBN+"'",
+        return jdbcTemplate.queryForObject("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS where ISBN='"+ISBN+"'",
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
-                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
     }
 
     public List<Items> searchItemByKeyword(String keyword) {
-        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate from FAHRI2.ITEMS where itemName='%"+keyword+"%'",
+        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS where itemName='%"+keyword+"%'",
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
-                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
         return result;
     }
 
@@ -144,7 +144,7 @@ public class ItemRepository {
         List<Items> result = jdbcTemplate.query("select * from FAHRI2.ITEMS join FAHRI2.PUBLISHER where itemName='%"+publisher+"%'",
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
-                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang")));
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
         return result;
     }
 

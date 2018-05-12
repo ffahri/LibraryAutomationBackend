@@ -3,6 +3,7 @@ package com.webischia.LibraryAutomationBackend.Controllers;
 import com.webischia.LibraryAutomationBackend.Domains.ItemType;
 import com.webischia.LibraryAutomationBackend.Domains.Items;
 import com.webischia.LibraryAutomationBackend.Domains.User;
+import com.webischia.LibraryAutomationBackend.Domains.UserAdressDTO;
 import com.webischia.LibraryAutomationBackend.Repository.ItemRepository;
 import com.webischia.LibraryAutomationBackend.Repository.UserRepository;
 import com.webischia.LibraryAutomationBackend.Service.ItemService;
@@ -30,7 +31,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('User')")
     @GetMapping("/info/{id}")
-    public ResponseEntity<User> addItemType(@PathVariable int id)
+    public ResponseEntity<UserAdressDTO> addItemType(@PathVariable int id)
     {
 
         return new ResponseEntity<>(userService.findByID(id), HttpStatus.OK);

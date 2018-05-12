@@ -170,8 +170,10 @@ public class ManagementController {
 
     @PreAuthorize("hasAuthority('Admin')")
     @PostMapping("/publisher/edit/{id}")
-    public ResponseEntity<Publisher>editPublisher(@RequestBody Publisher publisher , int id)
+    public ResponseEntity<Publisher>editPublisher(@RequestBody Publisher publisher , @PathVariable int id)
     {
+        publisher.setPublisherID(id);
+        System.out.println("PUBLISHERID "+publisher.getPublisherID());
         return new ResponseEntity<>(publishlerService.updatePublisher(publisher,id),HttpStatus.OK);
     }
     @PreAuthorize("hasAuthority('Admin')")

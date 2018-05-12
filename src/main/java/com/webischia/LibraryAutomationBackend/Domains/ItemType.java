@@ -1,9 +1,13 @@
 package com.webischia.LibraryAutomationBackend.Domains;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
-public class ItemType {
+@NoArgsConstructor
+public class ItemType implements Serializable{
     int typeID;
     String typeName;
 
