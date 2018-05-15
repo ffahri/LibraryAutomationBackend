@@ -40,4 +40,10 @@ public class PublishlerRepository {
 
         return jdbcTemplate.queryForObject("select publisherID,publisherName from FAHRI2.PUBLISHER where publisherID= "+id
                 ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));    }
+
+    public List<Publisher> searchKeyword(String keyword) {
+        List<Publisher> tmp = jdbcTemplate.query("select publisherID,publisherName from FAHRI2.PUBLISHER WHERE publisherName LIKE '%"+keyword+"%'"
+                ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));
+        return tmp;
+    }
 }

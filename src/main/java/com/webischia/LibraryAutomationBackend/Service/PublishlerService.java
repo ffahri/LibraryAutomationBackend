@@ -13,4 +13,6 @@ public interface PublishlerService {
     void deletePublisher(int id);
     List<Publisher> getAllPublishers();
     Publisher getPublisher(int id);
+    List<Publisher> searchByKeyword(String keyword);
+
 }

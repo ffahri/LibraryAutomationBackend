@@ -1,11 +1,13 @@
 package com.webischia.LibraryAutomationBackend.Domains;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 //Le grandi cose non sono fatte d’impulso, ma attraverso una serie di piccole cose messe insieme. -van gogh
 @Data
+@NoArgsConstructor
 public class Items {
     int itemID;
     String itemName;

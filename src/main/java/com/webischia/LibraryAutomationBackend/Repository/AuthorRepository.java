@@ -39,7 +39,11 @@ public class AuthorRepository{
                 ,(rs,rowNum) ->new Author(rs.getInt("authorID"),rs.getString("authorName"),rs.getString("authorLastName")));
     return tmp;
     }
-
+    public List<Author> searchKeyword(String keyword) {
+        List<Author> tmp = jdbcTemplate.query("select authorID,authorName,authorLastName from FAHRI2.AUTHOR WHERE authorName LIKE '%"+keyword+"%' or authorLastName LIKE '%"+keyword+"%'"
+                ,(rs,rowNum) ->new Author(rs.getInt("authorID"),rs.getString("authorName"),rs.getString("authorLastName")));
+        return tmp;
+    }
 }
 
 

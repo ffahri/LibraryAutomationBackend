@@ -2,6 +2,7 @@ package com.webischia.LibraryAutomationBackend.Repository;
 
 import com.webischia.LibraryAutomationBackend.Domains.ItemType;
 import com.webischia.LibraryAutomationBackend.Domains.Items;
+import com.webischia.LibraryAutomationBackend.Domains.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -132,28 +133,40 @@ public class ItemRepository {
     }
 
     public List<Items> searchItemByKeyword(String keyword) {
-        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS where itemName='%"+keyword+"%'",
+        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS where itemName LIKE '%"+keyword+"%'",
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
                         rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
         return result;
     }
 
-    public List<Items> searchItemsByPublisher(String publisher) {
+    public List<Items> searchItemsByPublisher(int publisherID) {
         //join????
-        List<Items> result = jdbcTemplate.query("select * from FAHRI2.ITEMS join FAHRI2.PUBLISHER where itemName='%"+publisher+"%'",
+        List<Items> result = jdbcTemplate.query("select * from FAHRI2.ITEMS where publisherID= "+publisherID,
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
                         rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
         return result;
     }
 
-    public List<Items> searchItemsByAuthor(String author) {
-        return null;
+    public List<Items> searchItemsByAuthorID(int authorID) {
+        return jdbcTemplate.query("SELECT * FROM FAHRI2.ITEMS items JOIN FAHRI2.AUTHOR_ITEMS ai on items.itemID = ai.itemID WHERE ai.authorID = "+authorID,
+                (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
+                        rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
     }
 
     public List<Items> searchItesmBySubject(String subject) {
         return null;
     }
+    public List<Items> searchItemsByPost(Search search)
+    {
 
-}
+        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS where itemName LIKE '%"+search.getKeyword()+"%' and   ",
+                (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
+                        rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
+                        rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
+                return result;
+    }
+    }
+

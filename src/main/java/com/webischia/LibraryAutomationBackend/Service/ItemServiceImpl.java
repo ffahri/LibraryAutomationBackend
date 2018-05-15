@@ -2,6 +2,7 @@ package com.webischia.LibraryAutomationBackend.Service;
 
 import com.webischia.LibraryAutomationBackend.Domains.ItemType;
 import com.webischia.LibraryAutomationBackend.Domains.Items;
+import com.webischia.LibraryAutomationBackend.Domains.Search;
 import com.webischia.LibraryAutomationBackend.Domains.Subject;
 import com.webischia.LibraryAutomationBackend.Repository.ItemRepository;
 import com.webischia.LibraryAutomationBackend.Repository.SubjectRepository;
@@ -138,17 +139,22 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<Items> searchItemsByPublisher(String publisher) {
-        return itemRepository.searchItemsByPublisher(publisher);
+    public List<Items> searchItemsByPublisher(int publisherID) {
+        return itemRepository.searchItemsByPublisher(publisherID);
     }
 
     @Override
-    public List<Items> searchItemsByAuthor(String author) {
-        return itemRepository.searchItemsByAuthor(author);
+    public List<Items> searchItemsByAuthorID(int authorID) {
+        return itemRepository.searchItemsByAuthorID(authorID);
     }
 
     @Override
     public List<Items> searchItesmBySubject(String subject) {
         return searchItesmBySubject(subject);
+    }
+
+    @Override
+    public List<Items> searchItemsByPost(Search search) {
+        return itemRepository.searchItemsByPost(search);
     }
 }

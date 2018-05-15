@@ -41,4 +41,9 @@ public class PublisherServiceImpl implements PublishlerService {
 
         return publishlerRepository.getPublisher(id);
     }
+
+    @Override
+    public List<Publisher> searchByKeyword(String keyword) {
+        return publishlerRepository.searchKeyword(keyword);
+    }
 }

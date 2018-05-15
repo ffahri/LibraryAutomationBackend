@@ -13,4 +13,7 @@ public interface AuthorService  {
     void deleteAuthor(int id);
     Author getAuthor(int id);
     List<Author> getAllAuthors();
+    List<Author> searchByKeyword(String keyword);
+
+
 }

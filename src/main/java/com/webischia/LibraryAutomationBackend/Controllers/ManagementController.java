@@ -271,4 +271,45 @@ public class ManagementController {
         itemService.editPublisherToItem(publisherid,itemid);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @GetMapping("/item/get/search/{keyword}")
+    public ResponseEntity<List<Items>>searchItemByKeyword(@PathVariable String keyword)
+    {
+
+        return new ResponseEntity<List<Items>>(itemService.searchItemByKeyword(keyword),HttpStatus.OK);
+    }
+
+    @PostMapping("/item/get/search/post")
+    public ResponseEntity<List<Items>>searchItemByPost(@RequestBody Search search)
+    {
+
+        return new ResponseEntity<List<Items>>(itemService.searchItemsByPost(search),HttpStatus.OK);
+    }
+
+    @GetMapping("/item/get/search/author/{authorID}")
+    public ResponseEntity<List<Items>>searchItemByAuthorID(@PathVariable int authorID)
+    {
+
+        return new ResponseEntity<List<Items>>(itemService.searchItemsByAuthorID(authorID),HttpStatus.OK);
+    }
+
+    @GetMapping("/author/search/{keyword}")
+    public ResponseEntity<List<Author>>searchAuthorByKeyword(@PathVariable String keyword)
+    {
+
+        return new ResponseEntity<List<Author>>(authorService.searchByKeyword(keyword),HttpStatus.OK);
+    }
+    @GetMapping("/publisher/search/{keyword}")
+    public ResponseEntity<List<Publisher>>searchPublisherByKeyword(@PathVariable String keyword)
+    {
+
+        return new ResponseEntity<List<Publisher>>(publishlerService.searchByKeyword(keyword),HttpStatus.OK);
+    }
+    @GetMapping("/item/get/search/publisher/{publisherID}")
+    public ResponseEntity<List<Items>>searchItemByPublisherID(@PathVariable int publisherID)
+    {
+
+        return new ResponseEntity<List<Items>>(itemService.searchItemsByPublisher(publisherID),HttpStatus.OK);
+    }
+
 }

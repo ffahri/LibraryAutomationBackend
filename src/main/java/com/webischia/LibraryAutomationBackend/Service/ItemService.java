@@ -21,9 +21,10 @@ public interface ItemService{
         Items getItem(int id);
         Items findItemByISBN(String ISBN);
         List<Items> searchItemByKeyword(String keyword);
-        List<Items> searchItemsByPublisher(String publisher);
-        List<Items> searchItemsByAuthor(String author);
+        List<Items> searchItemsByPublisher(int publisherID);
+        List<Items> searchItemsByAuthorID(int authorID);
         List<Items> searchItesmBySubject(String subject);
+        List<Items> searchItemsByPost(Search search);
 
         Subject addSubject(Subject subject);
         Subject updateSubject(Subject subject , int id);
