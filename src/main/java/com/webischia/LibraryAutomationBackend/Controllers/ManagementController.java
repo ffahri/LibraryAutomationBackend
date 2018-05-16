@@ -4,6 +4,8 @@ import com.webischia.LibraryAutomationBackend.Domains.*;
 import com.webischia.LibraryAutomationBackend.Service.AuthorService;
 import com.webischia.LibraryAutomationBackend.Service.ItemService;
 import com.webischia.LibraryAutomationBackend.Service.PublishlerService;
+import com.webischia.LibraryAutomationBackend.Service.UserService;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,11 +22,13 @@ public class ManagementController {
     private final ItemService itemService;
     private final PublishlerService publishlerService;
     private final AuthorService authorService;
+    private  final UserService userService;
 
-    public ManagementController(ItemService itemService, PublishlerService publishlerService, AuthorService authorService) {
+    public ManagementController(ItemService itemService, PublishlerService publishlerService, AuthorService authorService, UserService userService) {
         this.itemService = itemService;
         this.publishlerService = publishlerService;
         this.authorService = authorService;
+        this.userService = userService;
     }
 
     @PreAuthorize("hasAuthority('Admin')")
@@ -51,7 +55,7 @@ public class ManagementController {
 
         return new ResponseEntity<String>(HttpStatus.OK);
     }
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
 
     @GetMapping("/itemtype/get/{id}")
     public ResponseEntity<ItemType>getItemType(@PathVariable int id)
@@ -59,7 +63,7 @@ public class ManagementController {
 
         return new ResponseEntity<ItemType>(itemService.getItemType(id),HttpStatus.OK);
     }
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
 
     @GetMapping("/itemtype/get/all")
     public ResponseEntity<List<ItemType>>getAllItemType()
@@ -70,17 +74,17 @@ public class ManagementController {
     @PreAuthorize("hasAuthority('Admin')")
 
     @PostMapping("/item/add")
-    public ResponseEntity<Items>addItem(@RequestBody Items items)
+    public ResponseEntity<Items>addItem(@RequestBody ItemDTO itemDTO)
     {
 
-        return new ResponseEntity<>(itemService.addItem(items), HttpStatus.OK);
+        return new ResponseEntity<>(itemService.addItem(itemDTO), HttpStatus.OK);
     }
     @PreAuthorize("hasAuthority('Admin')")
 
     @PostMapping("/item/edit/{id}")
-    public ResponseEntity<Items>editItem(@RequestBody Items items , @PathVariable int id)
+    public ResponseEntity<Items>editItem(@RequestBody ItemDTO itemDTO , @PathVariable int id)
     {
-        return new ResponseEntity<>(itemService.updateItem(items,id),HttpStatus.OK);
+        return new ResponseEntity<>(itemService.updateItem(itemDTO,id),HttpStatus.OK);
     }
     @PreAuthorize("hasAuthority('Admin')")
 
@@ -92,7 +96,7 @@ public class ManagementController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
 
     @GetMapping("/item/get/{id}")
     public ResponseEntity<Items>getItem(@PathVariable int id)
@@ -106,7 +110,37 @@ public class ManagementController {
     {
         return new ResponseEntity<List<Items>>(itemService.getAllItems(),HttpStatus.OK);
     }
-
+    @PostMapping("/item/stock/add")
+    public ResponseEntity<Stock>postStock(@RequestBody Stock stock)
+    {
+        return new ResponseEntity<Stock>(itemService.addStock(stock),HttpStatus.OK);
+    }
+    @GetMapping("/item/stock/get/{id}")
+    public ResponseEntity<Stock>showStock(@PathVariable int id)
+    {
+        return new ResponseEntity<Stock>(itemService.getStock(id),HttpStatus.OK);
+    }
+    @GetMapping("/item/itemdto/get/{itemid}")
+    public ResponseEntity<ItemDTO>getITEMDTO(@PathVariable int itemid)
+    {
+        return new ResponseEntity<ItemDTO>(itemService.getItemDTO(itemid),HttpStatus.OK);
+    }
+    @GetMapping("/item/stock/item/{id}")
+    public ResponseEntity<List<Stock>>showAllStockByItemid(@PathVariable int id)
+    {
+        return new ResponseEntity<List<Stock>>(itemService.getAllStockByItemID(id),HttpStatus.OK);
+    }
+    @PostMapping("/item/stock/edit/")
+    public ResponseEntity<Stock>editStock(@RequestBody Stock stock)
+    {
+        return new ResponseEntity<Stock>(itemService.editStock(stock),HttpStatus.OK);
+    }
+    @PostMapping("/item/stock/delete/{id}")
+    public ResponseEntity<String>deleteStock(@PathVariable int id)
+    {
+        itemService.deleteStock(id);
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
     @PreAuthorize("hasAuthority('Admin')")
     @PostMapping("/author/add")
     public ResponseEntity<Author>addAuthor(@RequestBody Author author)
@@ -138,7 +172,7 @@ public class ManagementController {
 
     }
 
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
     @GetMapping("/author/get/all")
     public ResponseEntity<List<Author>>getAllAuthors()
     {
@@ -176,7 +210,7 @@ public class ManagementController {
         System.out.println("PUBLISHERID "+publisher.getPublisherID());
         return new ResponseEntity<>(publishlerService.updatePublisher(publisher,id),HttpStatus.OK);
     }
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
 
     @GetMapping("/publisher/get/all")
     public ResponseEntity<List<Publisher>>getAllPublishers()
@@ -215,7 +249,7 @@ public class ManagementController {
     {
         return new ResponseEntity<>(itemService.updateSubject(subject,id),HttpStatus.OK);
     }
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
 
     @GetMapping("/subject/get/all")
     public ResponseEntity<List<Subject>>getAllSubjects()
@@ -311,5 +345,48 @@ public class ManagementController {
 
         return new ResponseEntity<List<Items>>(itemService.searchItemsByPublisher(publisherID),HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
+    @GetMapping("/borrows/{userID}")
+    public ResponseEntity<List<Borrows>>aktifleriList(@PathVariable int userID)
+    {
+        return new ResponseEntity<List<Borrows>>(userService.aktifleriListele(userID),HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
+    @PostMapping("/borrows/odunc")
+    public ResponseEntity<List<Borrows>>oduncVer(@RequestBody Borrows borrows)
+    {
+        int userID = userService.mailtoID(borrows.getMail());
+        userService.oduncAl(borrows,userID);
+        return new ResponseEntity<List<Borrows>>(userService.aktifleriListele(userID),HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
+    @PostMapping("/borrows/iade")
+    public ResponseEntity<List<Borrows>>iadeAl(@RequestBody Borrows borrows)
+    {
+        userService.iadeAl(borrows);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
+    @PostMapping("/mailtoid")
+    public ResponseEntity<Borrows>mailtoID(@RequestBody Borrows borrows)
+    {
+        int userID = userService.mailtoID(borrows.getMail());
+        System.out.println(userID +" geldi");
+        Borrows tmp =new Borrows();
+        tmp.setUserID(userID);
+        return new ResponseEntity<Borrows>(tmp,HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('User')")
+    @GetMapping("/borrows/uzat/{stockID}")
+    public ResponseEntity<Borrows>iadeAl(@PathVariable int stockID)
+    {
+        userService.uzat(stockID);
+        Borrows tmp = new Borrows();
+        return new ResponseEntity<>(tmp,HttpStatus.OK);
+    }
+
 
 }

@@ -37,6 +37,15 @@ public class UserRepository {
 
 
     }
+    public int mailtoID(String mail){
+
+        String sqlQ ="select userID from FAHRI2.USERS where mail='"+mail+"'";
+
+        return jdbcTemplate.queryForObject(sqlQ,Integer.class);
+
+
+    }
+
 
     public UserAdressDTO findByID(int id)
     {
@@ -96,5 +105,39 @@ public class UserRepository {
         jdbcTemplate.execute(sqlAddress);
         return findByID( findByMail(user.getUser().getMail()) .getUserID()); //:D
 
+    }
+
+    public void uzat(int sure , int id){
+        sure = 15;
+        jdbcTemplate.execute("UPDATE FAHRI2.USERBORROW SET borrowLength = "+sure+",borrowDate = CURRENT_TIMESTAMP WHERE stockID = "+id);
+    }
+
+    public void oduncAl(Borrows borrows,int id){
+        borrows.setStockID(loctoID(borrows.getLokasyon1(),borrows.getLokasyon2()));
+        jdbcTemplate.execute("INSERT INTO FAHRI2.USERBORROW(userID,stockID,borrowLength,status) VALUES("+id+","+borrows.getStockID()+","+borrows.getBorrowLength()+",1)");
+
+    } //yayın idsi
+    public void iadeAl(Borrows borrows){
+        jdbcTemplate.execute("UPDATE FAHRI2.USERBORROW SET returnDate = CURRENT_TIMESTAMP , status = 0 WHERE stockID = (SELECT stockID FROM FAHRI2.STOCKITEM WHERE locationLetter1 ='"+borrows.getLokasyon1()+"' and locationLetter2='"+borrows.getLokasyon2()+"')");
+    }
+
+    public int loctoID(String let1,String let2)
+    {
+        String sqlQ ="select stockID from FAHRI2.STOCKITEM where locationLetter1='"+let1+"' and locationLetter2='"+let2+"'";
+
+        return jdbcTemplate.queryForObject(sqlQ,Integer.class);
+
+    }
+
+    public List<Borrows> aktifleriListele(int id) {
+        List<Borrows> tmp = jdbcTemplate.query("select item.itemName,ub.borrowDate,st.locationLetter1,st.locationLetter2,st.stockID,ub.userID,ub.borrowLength from FAHRI2.USERBORROW ub join FAHRI2.STOCKITEM st on ub.stockID = st.stockID join FAHRI2.ITEMS item on st.itemID = item.itemID WHERE ub.userID= "+id+" and ub.status = 1",
+                (rs,rowNum) ->new Borrows(rs.getInt("userID"),rs.getInt("stockID"),rs.getTimestamp("borrowDate"),rs.getString("locationLetter1"),rs.getString("locationLetter2"),rs.getString("itemName"),rs.getInt("borrowLength")));
+        return tmp;    }
+
+
+    public List<Borrows> hepsiniListele(int id) {
+        List<Borrows> tmp = jdbcTemplate.query("select * from FAHRI2.USERBORROW WHERE userID = "+id+"",
+                (rs,rowNum) ->new Borrows(rs.getInt("userID"),rs.getInt("stockID"),rs.getTimestamp("borrowDate"),rs.getInt("borrowLength"),rs.getInt("extended")));
+        return tmp;
     }
 }

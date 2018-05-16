@@ -1,7 +1,6 @@
 package com.webischia.LibraryAutomationBackend.Service;
 
 import com.webischia.LibraryAutomationBackend.Domains.*;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,12 +13,21 @@ public interface ItemService{
         List<ItemType> getAllItemTypes();
         ItemType updateItemType(ItemType dto , int id);
 
-        Items addItem(Items item);
-        Items updateItem(Items item,int id);
+        Stock addStock(Stock stock);
+        Stock editStock(Stock stock);
+        Stock getStock(int id);
+        void deleteStock(int id);
+        List<Stock> getAllStockByItemID(int id);
+
+
+        Items addItem(ItemDTO itemDTO);
+        Items updateItem(ItemDTO itemDTO,int id);
         void deleteItem(int id);
         List<Items> getAllItems();
         Items getItem(int id);
         Items findItemByISBN(String ISBN);
+        ItemDTO getItemDTO(int id);
+
         List<Items> searchItemByKeyword(String keyword);
         List<Items> searchItemsByPublisher(int publisherID);
         List<Items> searchItemsByAuthorID(int authorID);

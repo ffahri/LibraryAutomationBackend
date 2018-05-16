@@ -1,9 +1,6 @@
 package com.webischia.LibraryAutomationBackend.Service;
 
-import com.webischia.LibraryAutomationBackend.Domains.ItemType;
-import com.webischia.LibraryAutomationBackend.Domains.Items;
-import com.webischia.LibraryAutomationBackend.Domains.Search;
-import com.webischia.LibraryAutomationBackend.Domains.Subject;
+import com.webischia.LibraryAutomationBackend.Domains.*;
 import com.webischia.LibraryAutomationBackend.Repository.ItemRepository;
 import com.webischia.LibraryAutomationBackend.Repository.SubjectRepository;
 import org.springframework.stereotype.Service;
@@ -47,13 +44,13 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public Items addItem(Items item) {
-        return itemRepository.addItem(item,item.getTypeID());
+    public Items addItem(ItemDTO itemDTO) {
+        return itemRepository.addItem(itemDTO, itemDTO.getItem().getTypeID());
     }
 
     @Override
-    public Items updateItem(Items item, int id) {
-        return itemRepository.updateItem(item,id);
+    public Items updateItem(ItemDTO itemDTO, int id) {
+        return itemRepository.updateItem(itemDTO,id);
     }
 
     @Override
@@ -156,5 +153,35 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public List<Items> searchItemsByPost(Search search) {
         return itemRepository.searchItemsByPost(search);
+    }
+
+    @Override
+    public Stock addStock(Stock stock) {
+        return itemRepository.addStock(stock);
+    }
+
+    @Override
+    public Stock editStock(Stock stock) {
+        return itemRepository.editStock(stock);
+    }
+
+    @Override
+    public Stock getStock(int id) {
+        return itemRepository.getStock(id);
+    }
+
+    @Override
+    public void deleteStock(int id) {
+        itemRepository.deleteStock(id);
+    }
+
+    @Override
+    public List<Stock> getAllStockByItemID(int id) {
+        return itemRepository.getAllStockByItemID(id);
+    }
+
+    @Override
+    public ItemDTO getItemDTO(int id) {
+        return itemRepository.getItemDTO(id);
     }
 }

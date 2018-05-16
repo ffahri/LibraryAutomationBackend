@@ -1,12 +1,11 @@
 package com.webischia.LibraryAutomationBackend.Repository;
 
-import com.webischia.LibraryAutomationBackend.Domains.ItemType;
-import com.webischia.LibraryAutomationBackend.Domains.Items;
-import com.webischia.LibraryAutomationBackend.Domains.Search;
+import com.webischia.LibraryAutomationBackend.Domains.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 @Repository
@@ -47,21 +46,38 @@ public class ItemRepository {
         return getItemType(id);
     }
 
-    public Items addItem(Items item,int typeID){
+    public Items addItem(ItemDTO itemDTO, int typeID){
+        Items item = itemDTO.getItem();
         jdbcTemplate.execute("INSERT INTO FAHRI2.ITEMS(itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,publisherID)"+
         "VALUES('"+item.getItemName()+"',"+typeID+",'"+item.getItemDesc()+"','"+item.getISBN()+"','"+item.getStockNo()+"','"+item.getSizeValue()+
                 "','"+item.getPageNumber()+"','"+item.getPrintYear()+"','"+item.getEditionNo()+"','"+item.getItemLang()+"',"+item.getPublisherID()+")");
+        int itemID = jdbcTemplate
+                .queryForObject("SELECT itemID FROM FAHRI2.ITEMS WHERE stockNo='"+item.getStockNo()+"'",Integer.class);
+        for(int i = 0; i< itemDTO.getAuthorIDs().length; i++)
+            jdbcTemplate.execute("INSERT INTO FAHRI2.AUTHOR_ITEMS(authorID,itemID) VALUES("+ itemDTO.getAuthorIDs()[i]+","+itemID+")");
+        for(int j = 0; j< itemDTO.getSubjectIDs().length; j++)
+            jdbcTemplate.execute("INSERT INTO FAHRI2.SUBJECT_ITEMS(subjectID,itemID) VALUES("+ itemDTO.getSubjectIDs()[j]+","+itemID+")");
 
-        return getItem(jdbcTemplate
-                .queryForObject("SELECT itemID FROM FAHRI2.ITEMS WHERE stockNo='"+item.getStockNo()+"'",Integer.class));
+        return getItem(itemID);
     }
-    public Items updateItem(Items item,int id)
+    public Items updateItem(ItemDTO itemDTO,int id)
     {
-        jdbcTemplate.execute("UPDATE FAHRI2.ITEMS SET itemName='"+item.getItemName()+"',"+"typeID="+item.getTypeID()+",'"+"itemDesc="+item.getItemDesc()+"','"+
-        "ISBN="+item.getISBN()+"','"+"stockNo="+item.getISBN()+"','"+"sizeValue="+item.getSizeValue()+"','"+"pageNumber="+item.getPageNumber()+"','"+
-        "printYear="+item.getPrintYear()+"','"+"editionNo="+item.getEditionNo()+"','"+"itemLang="+item.getItemLang()+"',publisherID="+item.getPublisherID());
-        return getItem(jdbcTemplate
-                .queryForObject("SELECT itemID FROM FAHRI2.ITEMS WHERE itemID= "+id,Integer.class));
+        Items item = itemDTO.getItem();
+
+        jdbcTemplate.execute("UPDATE FAHRI2.ITEMS SET itemName='"+item.getItemName()+"',"+"typeID= "+item.getTypeID()+","+"itemDesc='"+item.getItemDesc()+"',"+
+        "ISBN='"+item.getISBN()+"',"+"stockNo='"+item.getISBN()+"',"+"sizeValue='"+item.getSizeValue()+"',"+"pageNumber='"+item.getPageNumber()+"',"+
+        "printYear='"+item.getPrintYear()+"',"+"editionNo='"+item.getEditionNo()+"',"+"itemLang='"+item.getItemLang()+"',publisherID= "+item.getPublisherID()+" WHERE itemID = "+id);
+        System.out.println(itemDTO.getSubjectIDs().length);
+        //silip baştan oluşturuyorum
+        jdbcTemplate.execute("DELETE FROM FAHRI2.AUTHOR_ITEMS WHERE itemID= "+item.getItemID());
+        jdbcTemplate.execute("DELETE FROM FAHRI2.SUBJECT_ITEMS WHERE itemID= "+item.getItemID());
+
+        for(int i = 0; i< itemDTO.getAuthorIDs().length; i++)
+            jdbcTemplate.execute("INSERT INTO FAHRI2.AUTHOR_ITEMS(authorID,itemID) VALUES("+ itemDTO.getAuthorIDs()[i]+","+id+")");
+        for(int j = 0; j< itemDTO.getSubjectIDs().length; j++)
+            jdbcTemplate.execute("INSERT INTO FAHRI2.SUBJECT_ITEMS(subjectID,itemID) VALUES("+ itemDTO.getSubjectIDs()[j]+","+id+")");
+
+        return getItem(id);
     }
 
     public void deleteItem(int id)
@@ -168,5 +184,46 @@ public class ItemRepository {
                         rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
                 return result;
     }
+
+    public Stock getStock(int id){
+            return jdbcTemplate.queryForObject("select stockID,itemID,locationLetter1,locationLetter2,addDate from FAHRI2.STOCKITEM where stockID= "+id,
+                    (rs,rowNum) -> new Stock(rs.getInt("itemID"),rs.getInt("stockID"),rs.getString("locationLetter1"),rs.getString("locationLetter2"),rs.getTimestamp("addDate")));
+
+        }
+
+    public Stock addStock(Stock stock) {
+        jdbcTemplate.execute("INSERT INTO FAHRI2.STOCKITEM(itemID,locationLetter1,locationLetter2) VALUES("+stock.getItemID()+",'"+stock.getLocationLetter1()+"','"+stock.getLocationLetter2()+"')");
+        return getStock(jdbcTemplate
+                .queryForObject("SELECT stockID FROM FAHRI2.STOCKITEM WHERE locationLetter1 ='"+stock.getLocationLetter1()+"' and locationLetter2 ='"+stock.getLocationLetter2()+"'",Integer.class));
     }
+    public Stock editStock(Stock stock)
+    {
+        jdbcTemplate.execute("UPDATE FAHRI2.STOCKITEM SET locationLetter1='"+stock.getLocationLetter1()+"',locationLetter2='"+stock.getLocationLetter2()+"' WHERE stockID = "+stock.getStockID());
+        return getStock(stock.getStockID());
+    }
+    public void deleteStock(int id)
+    {
+        jdbcTemplate.execute("DELETE FROM FAHRI2.STOCKITEM WHERE stockID = "+id);
+    }
+    public List<Stock> getAllStockByItemID(int id)
+    {
+        return jdbcTemplate.query("select stockID,itemID,locationLetter1,locationLetter2,addDate from FAHRI2.STOCKITEM where itemID= "+id,
+                (rs,rowNum) -> new Stock(rs.getInt("itemID"),rs.getInt("stockID"),rs.getString("locationLetter1"),rs.getString("locationLetter2"),rs.getTimestamp("addDate")));
+
+    }
+    public ItemDTO getItemDTO(int id) {
+        ItemDTO tmp = new ItemDTO();
+        List<Integer> integers =jdbcTemplate.query("SELECT authorID from FAHRI2.AUTHOR_ITEMS au WHERE itemID = "+id,(rs,rowNum) -> new Integer(rs.getInt("authorID")));
+        int[] array = integers.stream().mapToInt(i->i).toArray();
+        tmp.setAuthorIDs(array);
+        List<Integer> integers2 =jdbcTemplate.query("SELECT subjectID from FAHRI2.SUBJECT_ITEMS au WHERE itemID = "+id,(rs,rowNum) -> new Integer(rs.getInt("subjectID")));
+        int[] array2 = integers.stream().mapToInt(i->i).toArray();
+        tmp.setSubjectIDs(array2);
+        return tmp;
+    }
+
+
+
+
+}
 
