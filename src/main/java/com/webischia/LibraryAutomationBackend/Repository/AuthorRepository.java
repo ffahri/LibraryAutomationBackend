@@ -35,7 +35,7 @@ public class AuthorRepository{
                 ,(rs,rowNum) ->new Author(rs.getInt("authorID"),rs.getString("authorName"),rs.getString("authorLastName")));    }
 
     public List<Author> getAllAuthors() {
-        List<Author> tmp = jdbcTemplate.query("select authorID,authorName,authorLastName from FAHRI2.AUTHOR"
+        List<Author> tmp = jdbcTemplate.query("select authorID,authorName,authorLastName from FAHRI2.AUTHOR ORDER BY authorID"
                 ,(rs,rowNum) ->new Author(rs.getInt("authorID"),rs.getString("authorName"),rs.getString("authorLastName")));
     return tmp;
     }

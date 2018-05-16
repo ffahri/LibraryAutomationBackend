@@ -31,7 +31,7 @@ public class PublishlerRepository {
     }
 
     public List<Publisher> getAllPublishers() {
-        List<Publisher> tmp = jdbcTemplate.query("select publisherID,publisherName from FAHRI2.PUBLISHER"
+        List<Publisher> tmp = jdbcTemplate.query("select publisherID,publisherName from FAHRI2.PUBLISHER ORDER BY publisherID"
                 ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));
         return tmp;
     }
@@ -42,7 +42,7 @@ public class PublishlerRepository {
                 ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));    }
 
     public List<Publisher> searchKeyword(String keyword) {
-        List<Publisher> tmp = jdbcTemplate.query("select publisherID,publisherName from FAHRI2.PUBLISHER WHERE publisherName LIKE '%"+keyword+"%'"
+        List<Publisher> tmp = jdbcTemplate.query("select publisherID,publisherName from FAHRI2.PUBLISHER WHERE publisherName LIKE '%"+keyword+"%' ORDER BY publisherID"
                 ,(rs,rowNum) ->new Publisher(rs.getInt("publisherID"),rs.getString("publisherName")));
         return tmp;
     }

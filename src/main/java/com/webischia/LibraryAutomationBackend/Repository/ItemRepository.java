@@ -18,7 +18,7 @@ public class ItemRepository {
     public List<ItemType> getAllItemTypes() {
 
         List<ItemType> result = jdbcTemplate.query(
-                "SELECT typeID,typeName FROM FAHRI2.ITEMTYPE",
+                "SELECT typeID,typeName FROM FAHRI2.ITEMTYPE ORDER BY typeID",
                 (rs, rowNum) -> new ItemType(rs.getInt("typeID"),rs.getString("typeName")) );
 
         return result;
@@ -85,7 +85,7 @@ public class ItemRepository {
         jdbcTemplate.execute("DELETE FROM FAHRI2.ITEMS WHERE itemID= "+id);
     }
     public List<Items> getAllItems(){
-        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS",
+        List<Items> result = jdbcTemplate.query("select itemID,itemName,typeID,itemDesc,ISBN,stockNo,sizeValue,pageNumber,printYear,editionNo,itemLang,editDate,publisherID from FAHRI2.ITEMS ORDER BY itemID",
                 (rs,rowNum) -> new Items(rs.getInt("itemID"),rs.getString("itemName"),rs.getInt("typeID"),rs.getString("itemDesc"),
                         rs.getString("ISBN"),rs.getString("stockNo"),rs.getString("sizeValue"),rs.getString("pageNumber"),
                         rs.getString("printYear"),rs.getString("editionNo"),rs.getTimestamp("editDate"),rs.getString("itemLang"),rs.getInt("publisherID")));
@@ -207,7 +207,7 @@ public class ItemRepository {
     }
     public List<Stock> getAllStockByItemID(int id)
     {
-        return jdbcTemplate.query("select stockID,itemID,locationLetter1,locationLetter2,addDate from FAHRI2.STOCKITEM where itemID= "+id,
+        return jdbcTemplate.query("select stockID,itemID,locationLetter1,locationLetter2,addDate from FAHRI2.STOCKITEM where itemID= "+id+"ORDER BY stockID",
                 (rs,rowNum) -> new Stock(rs.getInt("itemID"),rs.getInt("stockID"),rs.getString("locationLetter1"),rs.getString("locationLetter2"),rs.getTimestamp("addDate")));
 
     }

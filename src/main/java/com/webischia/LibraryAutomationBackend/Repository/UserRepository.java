@@ -114,7 +114,7 @@ public class UserRepository {
 
     public void oduncAl(Borrows borrows,int id){
         borrows.setStockID(loctoID(borrows.getLokasyon1(),borrows.getLokasyon2()));
-        jdbcTemplate.execute("INSERT INTO FAHRI2.USERBORROW(userID,stockID,borrowLength,status) VALUES("+id+","+borrows.getStockID()+","+borrows.getBorrowLength()+",1)");
+        jdbcTemplate.execute("INSERT INTO FAHRI2.USERBORROW(userID,stockID,borrowLength,status) VALUES("+id+","+borrows.getStockID()+",15,1)");
 
     } //yayın idsi
     public void iadeAl(Borrows borrows){

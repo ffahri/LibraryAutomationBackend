@@ -38,7 +38,7 @@ public class SubjectRepository {
     }
 
     public List<Subject> getAllSubjects() {
-        List<Subject> tmp = jdbcTemplate.query("select subjectID,subjectName from FAHRI2.SUBJECT ",
+        List<Subject> tmp = jdbcTemplate.query("select subjectID,subjectName from FAHRI2.SUBJECT ORDER BY subjectID ",
                 (rs,rowNum) ->new Subject(rs.getInt("subjectID"),rs.getString("subjectName")));
         return tmp;
     }
