@@ -109,6 +109,7 @@ public class UserRepository {
 
     public void uzat(int sure , int id){
         sure = 15;
+
         jdbcTemplate.execute("UPDATE FAHRI2.USERBORROW SET borrowLength = "+sure+",borrowDate = CURRENT_TIMESTAMP WHERE stockID = "+id);
     }
 
